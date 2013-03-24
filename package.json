@@ -1,6 +1,6 @@
 {
   "name": "piping-styles",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Keep your styles piping hot! Rebuild your styles on change without binaries",
   "main": "lib/piping.js",
   "dependencies": {
