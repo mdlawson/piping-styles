@@ -1,0 +1,26 @@
+{
+  "name": "piping-styles",
+  "version": "0.1.0",
+  "description": "Keep your styles piping hot! Rebuild your styles on change without binaries",
+  "main": "lib/piping.js",
+  "dependencies": {
+    "chokidar": "0.5.x",
+    "colors": "0.6.x"
+  },
+  "devDependencies": {
+    "coffee-script": "~1.6.0"
+  },
+  "repository": "git://github.com/mdlawson/piping-styles.git",
+  "keywords": [
+    "live",
+    "styles",
+    "style",
+    "css",
+    "reload",
+    "hot",
+    "browser",
+    "watch"
+  ],
+  "author": "Michael Lawson",
+  "license": "MIT"
+}
