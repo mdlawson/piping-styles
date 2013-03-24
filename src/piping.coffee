@@ -8,10 +8,17 @@ options =
   ignore: /(\/\.|~$)/ 
   watch: true
   minify: false
+  includeModules: false
   build:
-    ".styl": (file,code,fn) ->
+    ".styl": (file,code,options,watcher,fn) ->
       try
         stylus = require "stylus"
+        _lookup = stylus.utils.lookup
+        stylus.utils.lookup = ->
+          file = _lookup.apply this,arguments
+          if file and (options.includeModules or file.indexOf("node_modules") is -1)
+            watcher.add file
+          return file
         s = stylus(code).set("filename",file)
         try
           s.use(require("nib")())
@@ -36,7 +43,7 @@ module.exports = (ops,out) ->
   main = path.resolve basedir,options.main
   out = path.resolve basedir,options.out
 
-  watcher = chokidar.watch path.dirname(main),
+  watcher = chokidar.watch main,
     ignored: options.ignore
     ignoreInitial: true
     persistent: true
@@ -46,7 +53,7 @@ module.exports = (ops,out) ->
     if options.build[type]
       start = Date.now()
       code = fs.readFileSync(i,"utf8")
-      options.build[type](i,code, (data) ->
+      options.build[type](i,code,options,watcher, (data) ->
         if options.minify then data = cleanCSS.process data
         fs.writeFileSync(o,data)
         console.log "[piping-styles]".bold.magenta,"Built in",Date.now()-start,"ms"

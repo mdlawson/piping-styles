@@ -18,7 +18,9 @@ require("piping-styles")({main:"./client/styles/app.styl",out:"./public/app.css"
 - __main__ _(path)_: The path to your top style
 - __out__ _(path)_: The path to where you want your css to be written to. Relative to the file where piping-styles was required
 - __ignore__ _(regex)_: Files/paths matching this regex will not be watched. Defaults to `/(\/\.|~$)/`
+- __minify__ _(boolean)_: Whether to minify all css output. Defaults to false
 - __watch__ _(boolean)_: Whether or not piping should rebuild on changes. Defaults to true, could be set to false for production
+- __includeModules__ _(boolean)_: Whether to include files located in node_modules folders when watching. defaults to false
 - __vendor__ _(object)_: Specify configuration for building vendor files. Vendor files are concatenated in order, and written to the given path.
   - __path__ _(string)_: Directory where vendor files are located, relative to file where piping-styles was required
   - __out__ _(string)_: Path where vendor ouput should be written, relative to the file where piping-styles was required
