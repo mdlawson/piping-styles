@@ -2,6 +2,7 @@ path = require "path"
 fs = require "fs"
 colors = require "colors"
 chokidar = require "chokidar"
+cleanCSS = require "clean-css"
 
 options =
   ignore: /(\/\.|~$)/ 
@@ -46,6 +47,7 @@ module.exports = (ops,out) ->
       start = Date.now()
       code = fs.readFileSync(i,"utf8")
       options.build[type](i,code, (data) ->
+        if options.minify then data = cleanCSS.process data
         fs.writeFileSync(o,data)
         console.log "[piping-styles]".bold.magenta,"Built in",Date.now()-start,"ms"
       )
@@ -69,6 +71,7 @@ module.exports = (ops,out) ->
       css = ""
       for file in files
         css += fs.readFileSync(file,"utf8") + "\n"
+      if options.minify then css = cleanCSS.process css
       fs.writeFileSync path.resolve(basedir,out),css
       console.log "[piping-styles]".bold.magenta,"Vendor built in",Date.now()-start,"ms"
 
